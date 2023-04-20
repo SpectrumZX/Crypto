@@ -1,18 +1,24 @@
 package ru.crypto;
 
+import java.security.DrbgParameters;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Random;
 import java.util.Scanner;
+
+import static java.security.DrbgParameters.Capability.PR_AND_RESEED;
 
 public class Lesson1 {
 
     private static String BASIC_MODE = "basic";
     private static String SECURE_MODE = "secure";
     private static String[] PREDICTIONS = new String[]{"У вас сегодня будет удача в делах!", "Сегодня хороший день для саморазвития!"};
-    private static Random basicRandom = new Random();
-    private static SecureRandom secureRandom = new SecureRandom();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
+
+        Random basicRandom = new Random();
+        SecureRandom secureRandom = SecureRandom.getInstance("DRBG",
+                DrbgParameters.instantiation(256, PR_AND_RESEED, null));
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите имя пользователя");
