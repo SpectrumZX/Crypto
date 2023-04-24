@@ -25,6 +25,7 @@ public class Lesson1 {
         String userName = scanner.nextLine();
         System.out.println("Введите способ получения прогноза (basic/secure)");
         String inputMode = scanner.nextLine();
+        scanner.close();
 
         int i = 0;
 
