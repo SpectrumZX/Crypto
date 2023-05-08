@@ -22,15 +22,15 @@ public class AsymmetricCrypto {
         byte[] encryptText = cipher.doFinal("Java".getBytes(UTF_8));
         System.out.println("Зашифрованное слово: " + Base64.getEncoder().encodeToString(encryptText));
 
-        cipher.init(Cipher.DECRYPT_MODE, pair.getPrivate());
-        byte[] decryptedText = cipher.doFinal(encryptText);
-        System.out.println("Расшифрованное слово: " + new String(decryptedText, UTF_8));
-
         Signature sign = Signature.getInstance("SHA256withRSA");
         sign.initSign(pair.getPrivate());
         sign.update(encryptText);
         byte[] digitalSignature = sign.sign();
         System.out.println("Подпись: " + Base64.getEncoder().encodeToString(digitalSignature));
+
+        cipher.init(Cipher.DECRYPT_MODE, pair.getPrivate());
+        byte[] decryptedText = cipher.doFinal(encryptText);
+        System.out.println("Расшифрованное слово: " + new String(decryptedText, UTF_8));
 
         sign.initVerify(pair.getPublic());
         sign.update(encryptText);
